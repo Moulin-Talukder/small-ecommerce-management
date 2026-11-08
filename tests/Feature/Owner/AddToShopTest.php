@@ -48,7 +48,7 @@ class AddToShopTest extends TestCase
         $this->add([
             'custom_name' => 'Shop Special',
             'custom_description' => 'Only here',
-            'custom_thumbnail' => UploadedFile::fake()->image('special.jpg'),
+            'custom_thumbnail' => $this->fakeImage('special.jpg'),
         ])->assertRedirect(route('owner.catalog.index'))->assertSessionHas('success', '"Shop Special" added to My Shop.');
 
         $listing = ShopProduct::firstOrFail();

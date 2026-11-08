@@ -59,7 +59,7 @@ class ShopManagementTest extends TestCase
     public function test_admin_can_create_a_shop_with_a_logo(): void
     {
         $this->actingAs($this->admin)->post(route('admin.shops.store'), $this->payload([
-            'logo' => UploadedFile::fake()->image('logo.png', 200, 200),
+            'logo' => $this->fakeImage('logo.png'),
         ]))->assertRedirect(route('admin.shops.index'))->assertSessionHas('success');
 
         $shop = Shop::firstOrFail();
@@ -88,7 +88,7 @@ class ShopManagementTest extends TestCase
         ]))->assertSessionHasErrors('logo');
 
         $this->post(route('admin.shops.store'), $this->payload([
-            'logo' => UploadedFile::fake()->image('huge.jpg')->size(5000),
+            'logo' => UploadedFile::fake()->create('huge.jpg', 5000, 'image/jpeg'),
         ]))->assertSessionHasErrors('logo');
     }
 
@@ -112,11 +112,11 @@ class ShopManagementTest extends TestCase
 
     public function test_replacing_the_logo_deletes_the_old_file(): void
     {
-        $old = UploadedFile::fake()->image('old.png')->store('shops', 'public');
+        $old = $this->fakeImage('old.png')->store('shops', 'public');
         $shop = Shop::factory()->for($this->owner, 'owner')->create(['logo' => $old]);
 
         $this->actingAs($this->admin)->put(route('admin.shops.update', $shop), $this->payload([
-            'logo' => UploadedFile::fake()->image('new.png'),
+            'logo' => $this->fakeImage('new.png'),
         ]));
 
         $shop->refresh();
@@ -127,7 +127,7 @@ class ShopManagementTest extends TestCase
 
     public function test_updating_without_a_new_logo_keeps_it_and_remove_flag_deletes_it(): void
     {
-        $logo = UploadedFile::fake()->image('logo.png')->store('shops', 'public');
+        $logo = $this->fakeImage('logo.png')->store('shops', 'public');
         $shop = Shop::factory()->for($this->owner, 'owner')->create(['logo' => $logo]);
 
         $this->actingAs($this->admin)->put(route('admin.shops.update', $shop), $this->payload());
@@ -140,8 +140,8 @@ class ShopManagementTest extends TestCase
 
     public function test_deleting_a_shop_removes_listings_and_image_files(): void
     {
-        $logo = UploadedFile::fake()->image('logo.png')->store('shops', 'public');
-        $thumb = UploadedFile::fake()->image('thumb.jpg')->store('shop-products', 'public');
+        $logo = $this->fakeImage('logo.png')->store('shops', 'public');
+        $thumb = $this->fakeImage('thumb.jpg')->store('shop-products', 'public');
         $shop = Shop::factory()->for($this->owner, 'owner')->create(['logo' => $logo]);
         $listing = ShopProduct::factory()->for($shop)->create(['custom_thumbnail' => $thumb]);
 

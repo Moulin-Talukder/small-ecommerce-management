@@ -73,7 +73,7 @@ class CatalogManagementTest extends TestCase
     public function test_admin_can_create_a_product_with_a_thumbnail(): void
     {
         $this->actingAs($this->admin)->post(route('admin.products.store'), $this->payload([
-            'thumbnail' => UploadedFile::fake()->image('mug.jpg'),
+            'thumbnail' => $this->fakeImage('mug.jpg'),
             'created_by' => $this->owner->id, // ignored: creator is the logged-in user
         ]))->assertRedirect(route('admin.products.index'))->assertSessionHas('success');
 
@@ -119,7 +119,7 @@ class CatalogManagementTest extends TestCase
 
     public function test_admin_can_edit_any_product_and_replace_its_thumbnail(): void
     {
-        $old = UploadedFile::fake()->image('old.jpg')->store('products', 'public');
+        $old = $this->fakeImage('old.jpg')->store('products', 'public');
         $product = Product::factory()->create(['created_by' => $this->owner->id, 'thumbnail' => $old, 'sku' => 'MUG-001']);
 
         $this->actingAs($this->admin)->get(route('admin.products.edit', $product))->assertOk();
@@ -127,7 +127,7 @@ class CatalogManagementTest extends TestCase
         $this->put(route('admin.products.update', $product), $this->payload([
             'name' => 'Big Mug',
             'base_price' => '15',
-            'thumbnail' => UploadedFile::fake()->image('new.jpg'),
+            'thumbnail' => $this->fakeImage('new.jpg'),
         ]))->assertRedirect(route('admin.products.index'));
 
         $product->refresh();
@@ -140,7 +140,7 @@ class CatalogManagementTest extends TestCase
 
     public function test_admin_can_remove_a_thumbnail(): void
     {
-        $old = UploadedFile::fake()->image('old.jpg')->store('products', 'public');
+        $old = $this->fakeImage('old.jpg')->store('products', 'public');
         $product = Product::factory()->create(['thumbnail' => $old]);
 
         $this->actingAs($this->admin)->put(route('admin.products.update', $product), $this->payload([

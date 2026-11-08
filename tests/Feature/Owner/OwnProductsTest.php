@@ -42,7 +42,7 @@ class OwnProductsTest extends TestCase
     public function test_owner_created_product_joins_the_shared_catalog(): void
     {
         $this->actingAs($this->owner)->post(route('owner.products.store'), $this->payload([
-            'thumbnail' => UploadedFile::fake()->image('soap.jpg'),
+            'thumbnail' => $this->fakeImage('soap.jpg'),
         ]))->assertRedirect(route('owner.products.index'));
 
         $product = Product::firstOrFail();

@@ -128,11 +128,11 @@ class ListingManagementTest extends TestCase
 
     public function test_custom_thumbnail_upload_replace_and_remove_falls_back_to_catalog_image(): void
     {
-        $this->update(['custom_thumbnail' => UploadedFile::fake()->image('first.jpg')]);
+        $this->update(['custom_thumbnail' => $this->fakeImage('first.jpg')]);
         $first = $this->listing->fresh()->custom_thumbnail;
         Storage::disk('public')->assertExists($first);
 
-        $this->update(['custom_thumbnail' => UploadedFile::fake()->image('second.jpg')]);
+        $this->update(['custom_thumbnail' => $this->fakeImage('second.jpg')]);
         $second = $this->listing->fresh()->custom_thumbnail;
         $this->assertNotSame($first, $second);
         Storage::disk('public')->assertMissing($first);
@@ -160,7 +160,7 @@ class ListingManagementTest extends TestCase
 
     public function test_removing_a_listing_keeps_the_catalog_product_and_deletes_the_custom_thumbnail(): void
     {
-        $thumb = UploadedFile::fake()->image('t.jpg')->store('shop-products', 'public');
+        $thumb = $this->fakeImage('t.jpg')->store('shop-products', 'public');
         $this->listing->update(['custom_thumbnail' => $thumb]);
 
         $this->actingAs($this->owner)->delete(route('owner.listings.destroy', [$this->shop, $this->listing]))
