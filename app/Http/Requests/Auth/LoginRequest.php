@@ -42,11 +42,23 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $inactive = false;
+
+        $authenticated = Auth::attemptWhen(
+            $this->only('email', 'password'),
+            function ($user) use (&$inactive): bool {
+                $inactive = ! $user->is_active;
+
+                return ! $inactive;
+            },
+            $this->boolean('remember'),
+        );
+
+        if (! $authenticated) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => $inactive ? trans('auth.inactive') : trans('auth.failed'),
             ]);
         }
 
