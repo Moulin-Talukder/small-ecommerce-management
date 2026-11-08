@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "oronno/small-ecommerce-management",
+    "name": "moulin-talukder/small-ecommerce-management",
     "type": "project",
     "description": "Small E-commerce Management — Laravel 12 + Inertia + Vue 3",
     "keywords": [
