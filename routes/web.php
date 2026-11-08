@@ -4,17 +4,13 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Owner;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Storefront;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Public storefront (guests). Slugs are resolved through the visibility scopes.
+Route::get('/', [Storefront\ShopController::class, 'index'])->name('storefront.shops.index');
+Route::get('/shops/{shopSlug}', [Storefront\ShopController::class, 'show'])->name('storefront.shops.show');
+Route::get('/shops/{shopSlug}/products/{productSlug}', [Storefront\ProductController::class, 'show'])->name('storefront.products.show');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware('auth')

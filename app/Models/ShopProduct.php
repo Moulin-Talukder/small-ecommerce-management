@@ -67,6 +67,17 @@ class ShopProduct extends Pivot
             ->whereHas('shop', fn (Builder $q) => $q->publiclyVisible());
     }
 
+    /**
+     * Order by the name customers see (custom name, else catalog name).
+     * COALESCE/NULLIF + a correlated subquery work on MySQL and SQLite.
+     */
+    public function scopeOrderByDisplayName(Builder $query): void
+    {
+        $query->orderByRaw(
+            "COALESCE(NULLIF(shop_products.custom_name, ''), (SELECT products.name FROM products WHERE products.id = shop_products.product_id))"
+        );
+    }
+
     protected function displayName(): Attribute
     {
         return Attribute::get(fn () => filled($this->custom_name) ? $this->custom_name : $this->product?->name);
