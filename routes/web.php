@@ -43,6 +43,11 @@ Route::middleware(['auth', 'role:shop_owner'])
     ->name('owner.')
     ->group(function () {
         Route::get('/', Owner\DashboardController::class)->name('dashboard');
+
+        Route::get('catalog', Owner\CatalogController::class)->name('catalog.index');
+        Route::resource('products', Owner\ProductController::class)->except('show');
+
+        Route::post('shops/{shop}/listings', [Owner\ListingController::class, 'store'])->name('listings.store');
     });
 
 Route::middleware('auth')->group(function () {

@@ -17,6 +17,9 @@ use Illuminate\Database\Seeder;
  *   - Canvas Tote Bag is an inactive listing in Urban Threads.
  *   - Vintage Desk Lamp is listed in Home & Hearth but soft-deleted.
  *   - Gadget Garage is an inactive shop.
+ * Ownership rules:
+ *   - Bob's Cold Brew Concentrate is also listed in Alice's Home & Hearth,
+ *     so Bob cannot delete it ("listed in other shops").
  */
 class ShopProductSeeder extends Seeder
 {
@@ -42,6 +45,8 @@ class ShopProductSeeder extends Seeder
                 'HOM-CDL-001' => ['stock' => 30],
                 'COF-MUG-001' => ['price' => 11.00, 'stock' => 18],
                 'HOM-LMP-003' => ['price' => 39.00, 'stock' => 3],
+                // Bob's product sold by Alice: Bob cannot delete it from the catalog.
+                'BOB-CBR-001' => ['price' => 14.00, 'stock' => 7],
             ],
             'Bean & Brew' => [
                 'COF-MUG-001' => [
