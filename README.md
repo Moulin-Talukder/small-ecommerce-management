@@ -109,8 +109,8 @@ php artisan key:generate
 CREATE DATABASE small_ecommerce CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Optional: a dedicated user instead of root
-CREATE USER 'ecom'@'localhost' IDENTIFIED BY 'secret';
-GRANT ALL PRIVILEGES ON small_ecommerce.* TO 'ecom'@'localhost';
+CREATE USER 'shop_app'@'localhost' IDENTIFIED BY 'choose-a-strong-password';
+GRANT ALL PRIVILEGES ON small_ecommerce.* TO 'shop_app'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
@@ -121,8 +121,8 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=small_ecommerce
-DB_USERNAME=root        # or ecom
-DB_PASSWORD=            # or secret
+DB_USERNAME=root        # or shop_app
+DB_PASSWORD=            # or the password you chose
 ```
 
 **5. Link the storage folder, then create the tables and seed the demo data**
@@ -277,7 +277,7 @@ The rule is implemented once as Eloquent scopes, `Shop::publiclyVisible()` and `
 php artisan test
 ```
 
-The feature tests use an in-memory SQLite database (this needs `pdo_sqlite`). They don't need a built frontend or the GD extension, and they never touch your `.env` database. Areas covered:
+The feature tests use an in-memory SQLite database (this needs `pdo_sqlite`). They need **no `.env`, no built frontend and no GD extension**, so `composer install && php artisan test` works on a fresh clone. They never touch your `.env` database. Areas covered:
 
 - the visibility rules and every 404 case;
 - override fallbacks, including "catalog edits keep shop overrides";
@@ -290,10 +290,10 @@ The feature tests use an in-memory SQLite database (this needs `pdo_sqlite`). Th
 - the seeders;
 - an N+1 guard (query counts of the main pages must not grow with the data).
 
-To run the same suite against MySQL instead, create an empty `small_ecommerce_test` database first. **The tests wipe it.**
+To run the same suite against MySQL instead, create an empty `small_ecommerce_test` database first. **The tests wipe it.** Tests don't read your `.env` (they use `.env.testing` + `phpunit.xml`), so pass the connection on the command line:
 
 ```bash
-DB_CONNECTION=mysql DB_DATABASE=small_ecommerce_test php artisan test
+DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_DATABASE=small_ecommerce_test DB_USERNAME=root DB_PASSWORD= php artisan test
 ```
 
 ---
