@@ -70,7 +70,8 @@ class Product extends Model
             return;
         }
 
-        $like = '%'.str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $term).'%';
+        // No backslash escaping: MySQL and SQLite treat LIKE escapes differently.
+        $like = '%'.$term.'%';
 
         $query->where(function (Builder $q) use ($like) {
             $q->where('products.name', 'like', $like)
