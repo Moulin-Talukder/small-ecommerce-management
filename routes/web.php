@@ -25,6 +25,14 @@ Route::middleware(['auth', 'role:admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
+
+        Route::resource('shop-owners', Admin\ShopOwnerController::class)
+            ->except('show')
+            ->parameters(['shop-owners' => 'shopOwner']);
+        Route::patch('shop-owners/{shopOwner}/toggle-active', [Admin\ShopOwnerController::class, 'toggleActive'])
+            ->name('shop-owners.toggle-active');
+        Route::put('shop-owners/{shopOwner}/password', [Admin\ShopOwnerController::class, 'resetPassword'])
+            ->name('shop-owners.password');
     });
 
 Route::middleware(['auth', 'role:shop_owner'])
