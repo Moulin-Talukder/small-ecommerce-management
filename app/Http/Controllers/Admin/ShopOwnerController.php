@@ -59,11 +59,11 @@ class ShopOwnerController extends Controller
 
     public function store(StoreShopOwnerRequest $request): RedirectResponse
     {
-        $owner = User::create([
-            ...$request->validated(),
+        $owner = new User($request->validated());
+        $owner->forceFill([
             'role' => Role::ShopOwner, // never taken from the request
             'email_verified_at' => now(),
-        ]);
+        ])->save();
 
         return redirect()->route('admin.shop-owners.index')
             ->with('success', "Shop owner \"{$owner->name}\" created.");

@@ -29,7 +29,7 @@ class Product extends Model
         'base_price',
         'thumbnail',
         'sku',
-        'created_by',
+        // 'created_by' is deliberately NOT fillable: set from the logged-in user.
     ];
 
     protected $appends = ['thumbnail_url'];

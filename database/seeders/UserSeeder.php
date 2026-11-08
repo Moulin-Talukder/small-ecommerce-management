@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            User::create($user + [
+            User::forceCreate($user + [
                 'password' => self::PASSWORD,
                 'email_verified_at' => now(),
             ]);

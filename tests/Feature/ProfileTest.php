@@ -61,6 +61,23 @@ class ProfileTest extends TestCase
         $this->assertNotNull($user->refresh()->email_verified_at);
     }
 
+    public function test_profile_update_cannot_change_role_or_active_state(): void
+    {
+        $user = User::factory()->shopOwner()->create();
+
+        $this->actingAs($user)->patch('/profile', [
+            'name' => 'Sneaky',
+            'email' => $user->email,
+            'role' => 'admin',
+            'is_active' => false,
+        ])->assertSessionHasNoErrors();
+
+        $user->refresh();
+        $this->assertSame('Sneaky', $user->name);
+        $this->assertTrue($user->isShopOwner());
+        $this->assertTrue($user->is_active);
+    }
+
     public function test_user_cannot_delete_their_own_account(): void
     {
         $user = User::factory()->create();

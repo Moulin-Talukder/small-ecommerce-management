@@ -54,6 +54,21 @@ class OwnProductsTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page->where('products.data.0.id', $product->id)->where('products.data.0.is_mine', false));
     }
 
+    public function test_created_by_cannot_be_spoofed(): void
+    {
+        $this->actingAs($this->owner)->post(route('owner.products.store'), $this->payload([
+            'created_by' => $this->otherOwner->id,
+        ]))->assertSessionHasNoErrors();
+
+        $this->assertSame($this->owner->id, Product::firstOrFail()->created_by);
+    }
+
+    public function test_mass_assignment_guards_role_and_creator(): void
+    {
+        $this->assertFalse((new User)->isFillable('role'));
+        $this->assertFalse((new Product)->isFillable('created_by'));
+    }
+
     public function test_owner_can_create_and_list_in_one_of_their_shops(): void
     {
         $shop = Shop::factory()->for($this->owner, 'owner')->create();

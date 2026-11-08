@@ -42,7 +42,7 @@ class ProductSeeder extends Seeder
         $users = User::pluck('id', 'email');
 
         foreach ($products as [$name, $sku, $price, $creator, $image, $description]) {
-            Product::create([
+            Product::forceCreate([
                 'name' => $name,
                 'sku' => $sku,
                 'base_price' => $price,

@@ -24,8 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
         'is_active',
+        // 'role' is deliberately NOT fillable: it is only ever set explicitly.
     ];
 
     /**
