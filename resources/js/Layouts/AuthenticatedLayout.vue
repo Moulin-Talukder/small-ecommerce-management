@@ -22,7 +22,7 @@ const menus = {
         { label: 'Shop owners', route: 'admin.shop-owners.index', match: 'admin.shop-owners.*' },
     ],
     shop_owner: [
-        { label: 'My shops', route: 'owner.dashboard', match: 'owner.dashboard' },
+        { label: 'My shops', route: 'owner.dashboard', match: ['owner.dashboard', 'owner.listings.*'] },
         { label: 'Catalog', route: 'owner.catalog.index', match: 'owner.catalog.*' },
         { label: 'My products', route: 'owner.products.index', match: 'owner.products.*' },
     ],
@@ -30,6 +30,7 @@ const menus = {
 
 // Only show links whose routes exist, so the menu grows with the features.
 const navigation = computed(() => (menus[user.value?.role] ?? []).filter((item) => route().has(item.route)));
+const isActive = (item) => [].concat(item.match).some((pattern) => route().current(pattern));
 const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Admin' : 'Shop owner'));
 </script>
 
@@ -54,7 +55,7 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Admin' : 'Shop
                                 v-for="item in navigation"
                                 :key="item.route"
                                 :href="route(item.route)"
-                                :active="route().current(item.match)"
+                                :active="isActive(item)"
                             >
                                 {{ item.label }}
                             </NavLink>
@@ -112,7 +113,7 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Admin' : 'Shop
                         v-for="item in navigation"
                         :key="item.route"
                         :href="route(item.route)"
-                        :active="route().current(item.match)"
+                        :active="isActive(item)"
                     >
                         {{ item.label }}
                     </ResponsiveNavLink>

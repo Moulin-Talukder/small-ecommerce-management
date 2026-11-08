@@ -47,7 +47,15 @@ Route::middleware(['auth', 'role:shop_owner'])
         Route::get('catalog', Owner\CatalogController::class)->name('catalog.index');
         Route::resource('products', Owner\ProductController::class)->except('show');
 
-        Route::post('shops/{shop}/listings', [Owner\ListingController::class, 'store'])->name('listings.store');
+        // Scoped bindings: a {shopProduct} must belong to the {shop} in the URL (else 404).
+        Route::scopeBindings()->controller(Owner\ListingController::class)->group(function () {
+            Route::get('shops/{shop}/listings', 'index')->name('listings.index');
+            Route::post('shops/{shop}/listings', 'store')->name('listings.store');
+            Route::get('shops/{shop}/listings/{shopProduct}/edit', 'edit')->name('listings.edit');
+            Route::put('shops/{shop}/listings/{shopProduct}', 'update')->name('listings.update');
+            Route::patch('shops/{shop}/listings/{shopProduct}/toggle', 'toggle')->name('listings.toggle');
+            Route::delete('shops/{shop}/listings/{shopProduct}', 'destroy')->name('listings.destroy');
+        });
     });
 
 Route::middleware('auth')->group(function () {
