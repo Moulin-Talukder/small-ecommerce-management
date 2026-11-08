@@ -26,6 +26,8 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
 
+        Route::resource('shops', Admin\ShopController::class)->except('show');
+
         Route::resource('shop-owners', Admin\ShopOwnerController::class)
             ->except('show')
             ->parameters(['shop-owners' => 'shopOwner']);
