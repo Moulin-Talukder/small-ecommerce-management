@@ -32,8 +32,14 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                // Only what the UI needs: never serialize the full model.
+                'user' => fn () => $request->user()?->only(['id', 'name', 'email', 'role']),
             ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+            ],
+            'appName' => config('app.name'),
         ];
     }
 }
