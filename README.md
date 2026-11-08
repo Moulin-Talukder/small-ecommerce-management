@@ -125,11 +125,11 @@ DB_USERNAME=root        # or ecom
 DB_PASSWORD=            # or secret
 ```
 
-**5. Create the tables, seed the demo data and link the storage folder**
+**5. Link the storage folder, then create the tables and seed the demo data**
 
 ```bash
-php artisan migrate --seed
 php artisan storage:link
+php artisan migrate --seed
 ```
 
 **6. Build the frontend**
@@ -149,7 +149,7 @@ Open **http://127.0.0.1:8000** and log in with one of the [demo accounts](#demo-
 
 > **Developing?** Instead of `npm run build`, keep `npm run dev` running in a second terminal for hot reloading.
 >
-> **One-command shortcut:** after steps 3 and 4, `composer run setup` runs `composer install`, `key:generate`, `migrate --seed`, `storage:link`, `npm install` and `npm run build` for you. It creates `.env` from `.env.example` if it doesn't exist yet.
+> **One-command shortcut:** after steps 3 and 4, `composer run setup` runs `composer install`, `key:generate`, `storage:link`, `migrate --seed`, `npm install` and `npm run build` for you. It creates `.env` from `.env.example` if it doesn't exist yet.
 >
 > **Reset the demo data at any time:** `php artisan migrate:fresh --seed`
 
@@ -166,8 +166,8 @@ composer install
 cp .env.sqlite.example .env           # Windows (cmd): copy .env.sqlite.example .env
 php artisan key:generate
 php -r "touch('database/database.sqlite');"
-php artisan migrate --seed
 php artisan storage:link
+php artisan migrate --seed
 npm install
 npm run build
 php artisan serve
