@@ -27,6 +27,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/', Admin\DashboardController::class)->name('dashboard');
 
         Route::resource('shops', Admin\ShopController::class)->except('show');
+        Route::resource('products', Admin\ProductController::class)->except('show');
 
         Route::resource('shop-owners', Admin\ShopOwnerController::class)
             ->except('show')
