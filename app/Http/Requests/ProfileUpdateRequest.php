@@ -5,10 +5,17 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        // Emails are stored lowercase; MySQL compares case-insensitively but SQLite does not.
+        $this->merge(['email' => Str::lower(trim((string) $this->email))]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
 class StoreShopOwnerRequest extends FormRequest
@@ -11,6 +12,12 @@ class StoreShopOwnerRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()->can('create', User::class);
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // Emails are stored lowercase; MySQL compares case-insensitively but SQLite does not.
+        $this->merge(['email' => Str::lower(trim((string) $this->email))]);
     }
 
     public function rules(): array

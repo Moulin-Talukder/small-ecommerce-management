@@ -20,6 +20,15 @@ class InactiveUserTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_login_email_is_case_insensitive(): void
+    {
+        $user = User::factory()->create(['email' => 'owner@example.com']);
+
+        $this->post('/login', ['email' => 'Owner@Example.com', 'password' => 'password']);
+
+        $this->assertAuthenticatedAs($user);
+    }
+
     public function test_wrong_password_for_inactive_user_shows_generic_error(): void
     {
         $user = User::factory()->inactive()->create();

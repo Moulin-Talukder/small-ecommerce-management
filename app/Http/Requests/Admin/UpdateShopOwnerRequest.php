@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateShopOwnerRequest extends FormRequest
@@ -10,6 +11,12 @@ class UpdateShopOwnerRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()->can('update', $this->route('shopOwner'));
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // Emails are stored lowercase; MySQL compares case-insensitively but SQLite does not.
+        $this->merge(['email' => Str::lower(trim((string) $this->email))]);
     }
 
     public function rules(): array

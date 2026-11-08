@@ -59,6 +59,19 @@ class ShopOwnerManagementTest extends TestCase
         $this->assertTrue(Hash::check('secret-pass', $owner->password));
     }
 
+    public function test_email_is_normalised_to_lowercase(): void
+    {
+        $this->actingAs($this->admin)->post(route('admin.shop-owners.store'), [
+            'name' => 'Mixed Case',
+            'email' => '  Mixed.Case@Example.COM ',
+            'password' => 'secret-pass',
+            'password_confirmation' => 'secret-pass',
+            'is_active' => true,
+        ])->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('users', ['email' => 'mixed.case@example.com']);
+    }
+
     public function test_create_validates_input(): void
     {
         User::factory()->create(['email' => 'taken@example.com']);
