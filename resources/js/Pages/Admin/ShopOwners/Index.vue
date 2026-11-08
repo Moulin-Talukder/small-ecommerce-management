@@ -71,7 +71,7 @@ function destroy(owner) {
                             <th class="px-4 py-3">Name</th>
                             <th class="hidden px-4 py-3 md:table-cell">Shops</th>
                             <th class="hidden px-4 py-3 md:table-cell">Products created</th>
-                            <th class="px-4 py-3">Status</th>
+                            <th class="hidden px-4 py-3 sm:table-cell">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -79,11 +79,12 @@ function destroy(owner) {
                         <tr v-for="owner in owners.data" :key="owner.id" class="hover:bg-gray-50">
                             <td class="px-4 py-3">
                                 <div class="font-medium text-gray-900">{{ owner.name }}</div>
-                                <div class="text-gray-500">{{ owner.email }}</div>
+                                <div class="break-all text-gray-500">{{ owner.email }}</div>
+                                <StatusBadge :active="owner.is_active" class="mt-1 sm:hidden" />
                             </td>
                             <td class="hidden px-4 py-3 text-gray-700 md:table-cell">{{ owner.shops_count }}</td>
                             <td class="hidden px-4 py-3 text-gray-700 md:table-cell">{{ owner.created_products_count }}</td>
-                            <td class="px-4 py-3"><StatusBadge :active="owner.is_active" /></td>
+                            <td class="hidden px-4 py-3 sm:table-cell"><StatusBadge :active="owner.is_active" /></td>
                             <td class="px-4 py-3">
                                 <div class="flex flex-wrap justify-end gap-x-4 gap-y-1 font-medium">
                                     <Link :href="route('admin.shop-owners.edit', owner.id)" class="text-indigo-600 hover:text-indigo-800">Edit</Link>

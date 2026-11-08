@@ -28,7 +28,7 @@ trait HasUniqueSlug
 
     public function generateUniqueSlug(string $value): string
     {
-        $base = Str::slug($value) ?: Str::lower(class_basename($this));
+        $base = Str::slug($value, '-', 'en', ['@' => 'at', '&' => 'and']) ?: Str::lower(class_basename($this));
         $base = Str::limit($base, 240, '');
 
         $slug = $base;

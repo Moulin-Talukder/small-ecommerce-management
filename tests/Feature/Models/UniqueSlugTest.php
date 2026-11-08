@@ -62,6 +62,11 @@ class UniqueSlugTest extends TestCase
         $this->assertSame('corner-store-2', $b->slug);
     }
 
+    public function test_ampersand_becomes_and(): void
+    {
+        $this->assertSame('bean-and-brew', Shop::factory()->create(['name' => 'Bean & Brew'])->slug);
+    }
+
     public function test_name_without_latin_characters_still_gets_a_slug(): void
     {
         $product = Product::factory()->create(['name' => '!!!']);

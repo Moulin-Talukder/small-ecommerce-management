@@ -63,7 +63,7 @@ function destroy(shop) {
                             <th class="px-4 py-3">Shop</th>
                             <th class="hidden px-4 py-3 md:table-cell">Owner</th>
                             <th class="hidden px-4 py-3 sm:table-cell">Listings</th>
-                            <th class="px-4 py-3">Status</th>
+                            <th class="hidden px-4 py-3 sm:table-cell">Status</th>
                             <th class="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -78,6 +78,7 @@ function destroy(shop) {
                                     <div class="min-w-0">
                                         <div class="truncate font-medium text-gray-900">{{ shop.name }}</div>
                                         <div class="truncate font-mono text-xs text-gray-500">/shops/{{ shop.slug }}</div>
+                                        <StatusBadge :active="shop.is_active" class="mt-1 sm:hidden" />
                                     </div>
                                 </div>
                             </td>
@@ -88,7 +89,7 @@ function destroy(shop) {
                                 </div>
                             </td>
                             <td class="hidden px-4 py-3 text-gray-700 sm:table-cell">{{ shop.shop_products_count }}</td>
-                            <td class="px-4 py-3"><StatusBadge :active="shop.is_active" /></td>
+                            <td class="hidden px-4 py-3 sm:table-cell"><StatusBadge :active="shop.is_active" /></td>
                             <td class="px-4 py-3">
                                 <div class="flex flex-wrap justify-end gap-x-4 gap-y-1 font-medium">
                                     <Link :href="route('admin.shops.edit', shop.id)" class="text-indigo-600 hover:text-indigo-800">Edit</Link>
