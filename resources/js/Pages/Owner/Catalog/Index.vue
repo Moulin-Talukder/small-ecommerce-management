@@ -74,9 +74,10 @@ const adding = ref(null);
         </Card>
 
         <div v-else class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div v-for="product in products.data" :key="product.id" class="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
-                <ProductThumb :url="product.thumbnail_url" :name="product.name" size="aspect-square w-full rounded-none" />
-                <div class="flex flex-1 flex-col p-4">
+            <div v-for="product in products.data" :key="product.id" class="flex overflow-hidden rounded-lg bg-white shadow-sm sm:flex-col">
+                <!-- Compact row on phones, square image card from sm: up -->
+                <ProductThumb :url="product.thumbnail_url" :name="product.name" size="h-28 w-28 rounded-none sm:aspect-square sm:h-auto sm:w-full" />
+                <div class="flex min-w-0 flex-1 flex-col p-3 sm:p-4">
                     <div class="flex items-start justify-between gap-2">
                         <h3 class="font-semibold text-gray-900">{{ product.name }}</h3>
                         <span class="shrink-0 font-semibold text-gray-900">{{ formatMoney(product.base_price) }}</span>
@@ -87,9 +88,9 @@ const adding = ref(null);
                             by {{ product.is_mine ? 'you' : product.creator_is_admin ? 'Admin' : product.creator_name }}
                         </span>
                     </p>
-                    <p class="mt-2 line-clamp-2 text-sm text-gray-600">{{ product.description }}</p>
+                    <p class="mt-2 line-clamp-2 hidden text-sm text-gray-600 sm:block">{{ product.description }}</p>
 
-                    <div class="mt-auto flex flex-wrap items-center gap-3 pt-4 text-sm font-medium">
+                    <div class="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 text-sm font-medium sm:pt-4">
                         <template v-if="selectedShop">
                             <span v-if="product.listing_id" class="inline-flex items-center gap-1 rounded-md bg-green-50 px-2.5 py-1.5 text-green-800">
                                 ✓ Already in this shop
