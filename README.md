@@ -4,7 +4,7 @@ A small multi-shop marketplace built with **Laravel 12, Inertia.js, Vue 3 and Ta
 
 An **admin** manages shops, shop-owner accounts and a **shared product catalog**. **Shop owners** pick products from that catalog (or add their own) and sell them in their shops with **shop-specific prices, names, descriptions, images and stock**. **Customers** browse the public storefront without logging in, and only see products that a shop actually sells.
 
-![Storefront home](docs/screenshots/01-storefront-home.png)
+![Storefront home](docs/screenshots/01-storefront-home.jpg)
 
 ---
 
@@ -21,6 +21,7 @@ An **admin** manages shops, shop-owner accounts and a **shared product catalog**
 - [Running the tests](#running-the-tests)
 - [Troubleshooting](#troubleshooting)
 - [Project structure](#project-structure)
+- [Image credits](#image-credits)
 
 ---
 
@@ -48,12 +49,12 @@ An **admin** manages shops, shop-owner accounts and a **shared product catalog**
 
 <table>
 <tr>
-<td><img src="docs/screenshots/02-storefront-shop.png" alt="Shop page with shop-specific prices"></td>
-<td><img src="docs/screenshots/03-storefront-product.png" alt="Product detail page"></td>
+<td><img src="docs/screenshots/02-storefront-shop.jpg" alt="Shop page with shop-specific prices"></td>
+<td><img src="docs/screenshots/03-storefront-product.jpg" alt="Product detail page"></td>
 </tr>
 <tr>
-<td><img src="docs/screenshots/04-admin-catalog.png" alt="Admin shared catalog"></td>
-<td><img src="docs/screenshots/05-owner-catalog-shop-selector.png" alt="Owner catalog with shop selector"></td>
+<td><img src="docs/screenshots/04-admin-catalog.jpg" alt="Admin shared catalog"></td>
+<td><img src="docs/screenshots/05-owner-catalog-shop-selector.jpg" alt="Owner catalog with shop selector"></td>
 </tr>
 </table>
 
@@ -80,7 +81,7 @@ An **admin** manages shops, shop-owner accounts and a **shared product catalog**
 
 Check your PHP extensions with `php -m`.
 
-> No internet access is needed at runtime or while seeding. Demo images live in `database/seeders/images/` and are copied into `storage/` by the seeder. Only `composer install` and `npm install` download packages.
+> No internet access is needed at runtime or while seeding. Demo images (free Unsplash stock photos, see [image credits](docs/IMAGE_CREDITS.md)) live in `database/seeders/images/` and are copied into `storage/` by the seeder. Only `composer install` and `npm install` download packages.
 
 ---
 
@@ -214,7 +215,7 @@ About 10 minutes. Use a private window for the guest parts.
 8. **Delete block**: log in as `bob@example.com` → **My products** → delete *Cold Brew Concentrate*. You get the red toast *"This product is listed in other shops"*.
 9. **Account management**: as admin → **Shop owners**. Deactivate Bob, then try to log in as Bob: it's refused, and his shop disappears from the storefront. Activate him again afterwards. Deleting Alice is blocked because she still owns shops.
 
-![Listing overrides with catalog hints](docs/screenshots/06-owner-listing-overrides.png)
+![Listing overrides with catalog hints](docs/screenshots/06-owner-listing-overrides.jpg)
 
 ---
 
@@ -339,3 +340,9 @@ resources/js/
   Components/                            shared UI (ConfirmDialog, ImageInput, Pagination, …)
 tests/Feature/                           feature tests (see "Running the tests")
 ```
+
+---
+
+## Image credits
+
+The demo product photos are free stock photos from [Unsplash](https://unsplash.com), used under the [Unsplash License](https://unsplash.com/license). They contain no brand logos or faces. The shop logos are original placeholder graphics. See **[docs/IMAGE_CREDITS.md](docs/IMAGE_CREDITS.md)** for every file's photographer and source link.
