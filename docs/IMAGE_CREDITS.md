@@ -2,7 +2,7 @@
 
 The demo product photos in `database/seeders/images/` are free stock photos from [Unsplash](https://unsplash.com), used under the [Unsplash License](https://unsplash.com/license). That license allows free use, including commercial use and modification, without requiring attribution. The photographers are credited here anyway.
 
-All photos were chosen to show **no brand logos, trademarks or faces**. Each one was cropped to a square, resized to 800 × 800 px and saved as a JPEG (quality ~80). Two photos were also lightly retouched to remove a small maker's mark; these are marked in the table.
+All photos were chosen to show **no brand logos, trademarks or faces**. Each one was cropped to a square (or, for the phone stand, fitted whole into the square on a plain padded background), resized to 800 × 800 px and saved as a JPEG (quality ~80). Two photos were also lightly retouched to remove a small maker's mark; these are marked in the table.
 
 The seeder copies these files from the repository, so seeding never downloads anything.
 
@@ -22,7 +22,7 @@ The seeder copies these files from the repository, so seeding never downloads an
 | `wireless-earbuds.jpg` | Wireless Earbuds | [Andrey Matveev](https://unsplash.com/@zelebb) | [unsplash.com/photos/VQ1F3zxx6o0](https://unsplash.com/photos/VQ1F3zxx6o0) | Unsplash License | cropped |
 | `usb-c-charging-cable.jpg` | USB-C Charging Cable | [Maxence Pira](https://unsplash.com/@maxence_pira) | [unsplash.com/photos/OJJhibC7cEM](https://unsplash.com/photos/OJJhibC7cEM) | Unsplash License | cropped |
 | `bluetooth-speaker.jpg` | Bluetooth Speaker | [Nicolas J Leclercq](https://unsplash.com/@nicolasjleclercq) | [unsplash.com/photos/gbG65gRAGx4](https://unsplash.com/photos/gbG65gRAGx4) | Unsplash License | cropped |
-| `aluminium-phone-stand.jpg` | Aluminium Phone Stand | [Rohan Krishnan](https://unsplash.com/@rohankrishnann) | [unsplash.com/photos/PxkNzkSZ8LM](https://unsplash.com/photos/PxkNzkSZ8LM) | Unsplash License | cropped |
+| `aluminium-phone-stand.jpg` | Aluminium Phone Stand | [Rohan Krishnan](https://unsplash.com/@rohankrishnann) | [unsplash.com/photos/PxkNzkSZ8LM](https://unsplash.com/photos/PxkNzkSZ8LM) | Unsplash License | not cropped: whole photo fitted into the square, padded with a plain colour sampled from its edges |
 | `scented-soy-candle.jpg` | Scented Soy Candle | [Sixteen Miles Out](https://unsplash.com/@sixteenmilesout) | [unsplash.com/photos/2QSsfflO51I](https://unsplash.com/photos/2QSsfflO51I) | Unsplash License | cropped |
 | `linen-cushion-cover.jpg` | Linen Cushion Cover | [Mitchell Luo](https://unsplash.com/@mitchel3uo) | [unsplash.com/photos/5ffiSFnqfXs](https://unsplash.com/photos/5ffiSFnqfXs) | Unsplash License | cropped |
 | `vintage-desk-lamp.jpg` | Vintage Desk Lamp | [Jez Timms](https://unsplash.com/@jeztimms) | [unsplash.com/photos/8muUTAmcWU4](https://unsplash.com/photos/8muUTAmcWU4) | Unsplash License | cropped |
